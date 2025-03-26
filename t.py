@@ -13,22 +13,46 @@ def compare_yaml(excel_file, yaml_file):
 
             flag = False
 
-            # Chuyển đổi giá trị thành kiểu phù hợp  
-            if pd.isna(value):  # Kiểm tra nếu value là NaN (trống)  
-                value = None  # Gán None vào value thay vì bỏ qua  
-            elif value == 0:
-                value = int(0)
+            # # Chuyển đổi giá trị thành kiểu phù hợp  
+            # if pd.isna(value):  # Kiểm tra nếu value là NaN (trống)  
+            #     value = None  # Gán None vào value thay vì bỏ qua  
+            # elif value == 0:
+            #     value = int(0)
 
-            elif isinstance(value, str) and value.upper() == "TRUE":  
-                value = "true"  
-            elif isinstance(value, str) and value.upper() == "FALSE":  
+            # elif isinstance(value, str) and value.upper() == "TRUE":  
+            #     value = "true"  
+            # elif isinstance(value, str) and value.upper() == "FALSE":  
+            #     value = "false"
+            # elif value == {}:  # Kiểm tra nếu value là từ điển rỗng
+            #     pass  # Giữ nguyên, không thay đổi
+            # elif value == "":  # Kiểm tra nếu value là chuỗi rỗng
+            #     pass  # Giữ nguyên, không thay đổi
+            # elif isinstance(value, float) and value.is_integer():  
+            #     value = int(value) 
+
+            if pd.isna(value):
+                value = None  
+            # elif value == 0:
+            #     value = int(0)
+            # elif isinstance(value, bool):  # Kiểm tra kiểu bool trước
+            #     pass  # Giữ nguyên True/False
+
+            elif isinstance(value, int) and value == 0:  # ✅ Đảm bảo chỉ xử lý số 0, không phải False
+                value = int(0)
+            # elif isinstance(value, bool):  
+            #     pass  # Giữ nguyên True/False
+            
+            elif isinstance(value, str) and value.upper() == "TRUE":
+                value = "true"
+            elif isinstance(value, str) and value.upper() == "FALSE":
                 value = "false"
             elif value == {}:  # Kiểm tra nếu value là từ điển rỗng
                 pass  # Giữ nguyên, không thay đổi
             elif value == "":  # Kiểm tra nếu value là chuỗi rỗng
                 pass  # Giữ nguyên, không thay đổi
-            elif isinstance(value, float) and value.is_integer():  
-                value = int(value) 
+            elif isinstance(value, float) and value.is_integer():
+                value = int(value)
+
             
             
             temp = yaml_dict
@@ -77,37 +101,43 @@ def compare_yaml(excel_file, yaml_file):
     #     output_yaml = "output.yaml"  
     convert_excel_to_yaml(excel_file, yaml_file)   
 
-    # def process_yaml_file(yaml_file):
-    #     # Read the file and process lines
-    #     with open(yaml_file, 'r') as file:
-    #         lines = file.readlines()
+    def process_yaml_file(yaml_file):
+        # Read the file and process lines
+        with open(yaml_file, 'r') as file:
+            lines = file.readlines()
         
-    #     # Process each line
-    #     processed_lines = []
-    #     for line in lines:
-    #         # Replace '{}' with an actual empty dict
-    #         if "'{}'" in line:
-    #             line = line.replace("'{}'", "{}")
+        # Process each line
+        processed_lines = []
+        for line in lines:
+            # Replace '{}' with an actual empty dict
+            if "'{}'" in line:
+                line = line.replace("'{}'", "{}")
             
-    #         # Replace '""' with an actual empty string
-    #         if "'\"\"'" in line:
-    #             line = line.replace("'\"\"'", '""')
+            # Replace '""' with an actual empty string
+            if "'\"\"'" in line:
+                line = line.replace("'\"\"'", '""')
 
-    #         # Replace '"0"' with "0"
-    #         if "'\"0\"'" in line:
-    #             line = line.replace("'\"0\"'", '"0"')
+            # Replace '"0"' with "0"
+            if "'\"0\"'" in line:
+                line = line.replace("'\"0\"'", '"0"')
+
+            if "'true'" in line:
+                line = line.replace("'true'", "true")
+
+            if "'false'" in line:
+                line = line.replace("'false'", "false")
             
-    #         processed_lines.append(line)
+            processed_lines.append(line)
         
-    #     # Write processed lines to output file
-    #     with open(yaml_file, 'w') as file:
-    #         file.writelines(processed_lines)
+        # Write processed lines to output file
+        with open(yaml_file, 'w') as file:
+            file.writelines(processed_lines)
         
-    #     # print(f"Processed file saved to {output_file}")
+        # print(f"Processed file saved to {output_file}")
 
-    # # Example usage
-    # # input_file = 'b.yaml'
-    # # output_file = 'b_processed.yaml'
-    # process_yaml_file(yaml_file)
+    # Example usage
+    # input_file = 'b.yaml'
+    # output_file = 'b_processed.yaml'
+    process_yaml_file(yaml_file)
 
-compare_yaml('config1.xlsx', 'hhhhh111.yaml')
+compare_yaml('confi1.xlsx', 'hhhhh111.yaml')

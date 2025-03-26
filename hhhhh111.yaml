@@ -1,7 +1,7 @@
 apiVersion: kubelet.config.k8s.io/v1beta1
 authentication:
   anonymous:
-    enabled: 0
+    enabled: false
   webhook:
     cacheTTL: 0s
     enabled: true
@@ -16,7 +16,7 @@ cgroupDriver: systemd
 clusterDNS:
 - 10.96.0.10
 clusterDomain: cluster.local
-containerRuntimeEndpoint: '""'
+containerRuntimeEndpoint: ""
 cpuManagerReconcilePeriod: 0s
 evictionPressureTransitionPeriod: 0s
 fileCheckFrequency: 0s
@@ -32,16 +32,16 @@ logging:
   flushFrequency: 0
   options:
     json:
-      infoBufferSize: '"0"'
+      infoBufferSize: "0"
     text:
-      infoBufferSize: '"0"'
+      infoBufferSize: "0"
   verbosity: 0
-memorySwap: '{}'
+memorySwap: {}
 nodeStatusReportFrequency: 0s
 nodeStatusUpdateFrequency: 0s
 readOnlyPort: 10255
-resolvConf: '""'
-rotateCertificates: 'true'
+resolvConf: ""
+rotateCertificates: true
 runtimeRequestTimeout: 0s
 shutdownGracePeriod: 0s
 shutdownGracePeriodCriticalPods: 0s
